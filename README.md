@@ -40,6 +40,8 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 ```
 composer install 
 cp .env.example .env
-php artisan migrate:fresh
+php artisan migrate
+php artisan storage:link
+php artisan db:seed
 php artisan serve
 ```
