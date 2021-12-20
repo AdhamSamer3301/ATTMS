@@ -39,15 +39,17 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','
     Route::delete('/employees/{employee_id}', 'EmployeeController@destroy')->name('employees.delete');
     // Routes for employees //
 
+    // Routes for Departments //
+    Route::get('/departments/list-department', 'DepartmentController@index')->name('departments.index');
+    Route::get('/departments/add-department', 'DepartmentController@create')->name('departments.create');
+    Route::post('/departments', 'DepartmentController@store')->name('departments.store');
+    Route::delete('/departments/{department_id}', 'DepartmentController@destroy')->name('department.delete');
+    // Routes for Departments //
+
     // Routes for leaves //
     Route::get('/leaves/list-leaves', 'LeaveController@index')->name('leaves.index');
     Route::put('/leaves/{leave_id}', 'LeaveController@update')->name('leaves.update');
     // Routes for leaves //
-
-    // Routes for expenses //
-    Route::get('/expenses/list-expenses', 'ExpenseController@index')->name('expenses.index');
-    Route::put('/expenses/{expense_id}', 'ExpenseController@update')->name('expenses.update');
-    // Routes for expenses //
 
     // Routes for holidays //
     Route::get('/holidays/list-holidays', 'HolidayController@index')->name('holidays.index');
@@ -64,6 +66,7 @@ Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware(
     Route::get('/profile', 'EmployeeController@profile')->name('profile');
     Route::get('/profile-edit/{employee_id}', 'EmployeeController@profile_edit')->name('profile-edit');
     Route::put('/profile/{employee_id}', 'EmployeeController@profile_update')->name('profile-update');
+
     // Routes for Attendances //
     Route::get('/attendance/list-attendances', 'AttendanceController@index')->name('attendance.index');
     Route::post('/attendance/list-attendances', 'AttendanceController@index')->name('attendance.index');
@@ -83,15 +86,6 @@ Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware(
     Route::put('/leaves/{leave_id}', 'LeaveController@update')->name('leaves.update');
     Route::delete('/leaves/{leave_id}', 'LeaveController@destroy')->name('leaves.delete');
     // Routes for Leaves //
-
-    // Routes for Expenses//
-    Route::get('/expenses/list-expenses', 'ExpenseController@index')->name('expenses.index');
-    Route::get('/expenses/claim-expense', 'ExpenseController@create')->name('expenses.create');
-    Route::post('/expenses/{employee_id}', 'ExpenseController@store')->name('expenses.store');
-    Route::get('/expenses/edit-expense/{expense_id}', 'ExpenseController@edit')->name('expenses.edit');
-    Route::put('/expenses/{expense_id}', 'ExpenseController@update')->name('expenses.update');
-    Route::delete('/expenses/{expense_id}', 'ExpenseController@destroy')->name('expenses.delete');
-    // Routes for Expenses//
 
     // Routes for Self //
     Route::get('/self/holidays', 'SelfController@holidays')->name('self.holidays');

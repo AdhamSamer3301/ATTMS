@@ -52,15 +52,15 @@ class EmployeeController extends Controller
         $employeeRole = Role::where('name', 'employee')->first();
         $user->roles()->attach($employeeRole);
         $employeeDetails = [
-            'user_id' => $user->id, 
-            'first_name' => $request->first_name, 
+            'user_id' => $user->id,
+            'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'sex' => $request->sex, 
-            'dob' => $request->dob, 
+            'sex' => $request->sex,
+            'dob' => $request->dob,
             'join_date' => $request->join_date,
-            'desg' => $request->desg, 
-            'department_id' => $request->department_id, 
-            'salary' => $request->salary, 
+            'desg' => $request->desg,
+            'department_id' => $request->department_id,
+            'salary' => $request->salary,
             'photo'  => 'user.png'
         ];
         // Photo upload
@@ -77,14 +77,14 @@ class EmployeeController extends Controller
             // $path = $request->file('photo')->storeAs('public'.DIRECTORY_SEPARATOR.'employee_photos', $filename_store);
             // add new file name
             $image = $request->file('photo');
-            $image_resize = Image::make($image->getRealPath());              
+            $image_resize = Image::make($image->getRealPath());
             $image_resize->resize(300, 300);
             $image_resize->save(public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR.$filename_store));
             $employeeDetails['photo'] = $filename_store;
         }
-        
+
         Employee::create($employeeDetails);
-        
+
         $request->session()->flash('success', 'Employee has been successfully added');
         return back();
     }
@@ -124,7 +124,6 @@ class EmployeeController extends Controller
         // detaches all the roles
         DB::table('leaves')->where('employee_id', '=', $employee_id)->delete();
         DB::table('attendances')->where('employee_id', '=', $employee_id)->delete();
-        DB::table('expenses')->where('employee_id', '=', $employee_id)->delete();
         $employee->delete();
         $user->roles()->detach();
         // deletes the users

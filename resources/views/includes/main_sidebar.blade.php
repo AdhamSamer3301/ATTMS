@@ -9,13 +9,13 @@
         href="{{ route('employee.index') }}"
     @endcan
     class="brand-link text-center">
-        {{-- <img
+        <img
             src="/dist/img/AdminLTELogo.png"
             alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3"
             style="opacity: 0.8;"
-        /> --}}
-        <span class="brand-text font-weight-light ">EAMS</span>
+        />
+        <span class="brand-text font-weight-light ">ATTMS</span>
     </a>
 
     <!-- Sidebar -->
@@ -54,7 +54,7 @@
                 @can('admin-access')
 
 
-                
+
                 @include('includes.admin.sidebar_items')
                 @endcan
                 @can('employee-access')

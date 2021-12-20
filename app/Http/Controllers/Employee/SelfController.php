@@ -16,22 +16,6 @@ class SelfController extends Controller
 
         return view('employee.self.holidays')->with($data);
     }
-
-    public function expenseClaim () {
-        $data = [
-            'employee' => Auth::user()->employee
-        ];
-        return view('employee.self.expense-claim')->with($data);
-    }
-
-    public function expenseStore(Request $request, $employee_id) {
-        $this->validate($request, [
-            'reason' => 'required',
-            'description' => 'required',
-            'amount' => 'required | numeric',
-            'receipt' => 'image | nullable'
-        ]);
-
         if ($request->hasFile('receipt')) {
             // GET FILENAME
             $filename_ext = $request->file('receipt')->getClientOriginalName();
