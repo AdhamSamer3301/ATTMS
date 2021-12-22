@@ -44,6 +44,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','
     Route::get('/departments/add-department', 'DepartmentController@create')->name('departments.create');
     Route::post('/departments', 'DepartmentController@store')->name('departments.store');
     Route::delete('/departments/{department_id}', 'DepartmentController@destroy')->name('department.delete');
+    Route::get('/departments/details/{department_id}', 'DepartmentController@detail')->name('department.details');
     // Routes for Departments //
 
     // Routes for leaves //

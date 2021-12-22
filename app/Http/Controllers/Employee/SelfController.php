@@ -15,7 +15,6 @@ class SelfController extends Controller
         ];
 
         return view('employee.self.holidays')->with($data);
-    }
         if ($request->hasFile('receipt')) {
             // GET FILENAME
             $filename_ext = $request->file('receipt')->getClientOriginalName();
@@ -27,9 +26,9 @@ class SelfController extends Controller
             $filename_store = $filename.'_'.time().'.'.$ext;
             // UPLOAD IMAGE
             $path = $request->file('receipt')->storeAs('public/receipts', $filename_store);
-            } else {
+        } else {
             $filename_store = 'noimg.jpg';
-            }
+        }
         dd($path);
     }
 
@@ -40,3 +39,5 @@ class SelfController extends Controller
         return view('employee.self.salary-print');
     }
 }
+
+

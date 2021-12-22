@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
 
@@ -42,7 +42,7 @@
                         @csrf
                         @method('POST')
                     <div class="card-body">
-                        
+
                             <fieldset>
                                 <div class="form-group">
                                     <label for="">First Name</label>
@@ -102,20 +102,23 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="">Designation</label>
-                                        <select name="desg" class="form-control">
+                                        <label for="">Roles</label>
+                                        <select name="role" class="form-control">
                                             <option hidden disabled selected value> -- select an option -- </option>
-                                            @foreach ($desgs as $desg)
-                                                <option value="{{ $desg }}"
-                                                @if (old('desg') == $desg)
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->name}}"
+                                                @if (old('role') == $role->name)
                                                     selected
                                                 @endif
+                                                @if ($role->name == "admin")
+                                                    hidden
+                                                @endif
                                                 >
-                                                    {{ $desg }}
+                                                    {{ $role->name}}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('desg')
+                                        @error('role')
                                         <div class="text-danger">
                                             Please select an valid option
                                         </div>
@@ -129,7 +132,7 @@
                                                 <option value="{{ $department->id }}"
                                                     @if (old('department_id') == $department->id)
                                                         selected
-                                                    @endif    
+                                                    @endif
                                                 >
                                                     {{ $department->name }}
                                                 </option>
@@ -179,8 +182,8 @@
                                     @enderror
                                 </div>
                             </fieldset>
-                            
-                        
+
+
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-flat btn-primary" style="width: 40%; font-size:1.3rem">Add</button>
@@ -189,7 +192,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!-- /.container-fluid -->
 </section>
@@ -238,7 +241,7 @@
                 }
             });
         }
-        
+
     });
 </script>
 @endsection

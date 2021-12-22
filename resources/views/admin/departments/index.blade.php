@@ -56,7 +56,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $department->name }}</td>
                                     <td>
-                                        <a href="{{ route('admin.departments.store', $department->id) }}" class="btn btn-flat btn-info">View Dept</a>
+                                        <a href="{{ route('admin.department.details', $department->id) }}" class="btn btn-flat btn-info">View Dept</a>
                                         <button
                                         class="btn btn-flat btn-danger"
                                         data-toggle="modal"

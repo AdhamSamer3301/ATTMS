@@ -29,8 +29,7 @@ class EmployeeController extends Controller
     public function profile_edit($employee_id) {
         $data = [
             'employee' => Employee::findOrFail($employee_id),
-            'departments' => Department::all(),
-            'desgs' => ['Manager', 'Assistant Manager', 'Deputy Manager', 'Clerk']
+            'departments' => Department::all()
         ];
         Gate::authorize('employee-profile-access', intval($employee_id));
         return view('employee.profile-edit')->with($data);
@@ -49,7 +48,7 @@ class EmployeeController extends Controller
         $employee->dob = $request->dob;
         $employee->sex = $request->gender;
         $employee->join_date = $request->join_date;
-        $employee->desg = $request->desg;
+        // $employee->desg = $request->desg;
         $employee->department_id = $request->department_id;
         if ($request->hasFile('photo')) {
             // Deleting the old image
@@ -57,7 +56,7 @@ class EmployeeController extends Controller
                 $old_filepath = public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR. $employee->photo);
                 if(file_exists($old_filepath)) {
                     unlink($old_filepath);
-                }    
+                }
             }
             // GET FILENAME
             $filename_ext = $request->file('photo')->getClientOriginalName();
@@ -71,7 +70,7 @@ class EmployeeController extends Controller
             // $path = $request->file('photo')->storeAs('public'.DIRECTORY_SEPARATOR.'employee_photos', $filename_store);
             // add new file name
             $image = $request->file('photo');
-            $image_resize = Image::make($image->getRealPath());              
+            $image_resize = Image::make($image->getRealPath());
             $image_resize->resize(300, 300);
             $image_resize->save(public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR.$filename_store));
             $employee->photo = $filename_store;
