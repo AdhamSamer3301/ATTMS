@@ -6,6 +6,7 @@ use App\Attendance;
 use App\Department;
 use App\Employee;
 use App\Http\Controllers\Controller;
+// use App\Http\Controllers\Admin\Roles;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
@@ -27,7 +28,12 @@ class EmployeeController extends Controller
     public function create() {
         $data = [
             'departments' => Department::all(),
-            'desgs' => ['Manager', 'Assistant Manager', 'Deputy Manager', 'Clerk']
+            // 'roles' => Role::all(),
+            'roles' => DB::select(
+                DB::raw(
+                    "SELECT `name` FROM roles "
+                )
+            )
         ];
         return view('admin.employees.create')->with($data);
     }
@@ -37,8 +43,8 @@ class EmployeeController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'sex' => 'required',
-            'desg' => 'required',
             'department_id' => 'required',
+            'role_id' => 'required',
             'salary' => 'required|numeric',
             'email' => 'required|email',
             'photo' => 'image|nullable',
@@ -49,7 +55,8 @@ class EmployeeController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        $employeeRole = Role::where('name', 'employee')->first();
+        $employeeRole = Role::where('name', $request->role )->first();
+        // $employeeRole = $request->role->name;
         $user->roles()->attach($employeeRole);
         $employeeDetails = [
             'user_id' => $user->id,
@@ -58,7 +65,7 @@ class EmployeeController extends Controller
             'sex' => $request->sex,
             'dob' => $request->dob,
             'join_date' => $request->join_date,
-            'desg' => $request->desg,
+            'role_id' => $request->role,
             'department_id' => $request->department_id,
             'salary' => $request->salary,
             'photo'  => 'user.png'
@@ -106,7 +113,7 @@ class EmployeeController extends Controller
     }
 
     public function attendanceByDate($date) {
-        $employees = DB::table('employees')->select('id', 'first_name', 'last_name', 'desg', 'department_id')->get();
+        $employees = DB::table('employees')->select('id', 'first_name', 'last_name', 'role_id', 'department_id')->get();
         $attendances = Attendance::all()->filter(function($attendance, $key) use ($date){
             return $attendance->created_at->dayOfYear == $date->dayOfYear;
         });

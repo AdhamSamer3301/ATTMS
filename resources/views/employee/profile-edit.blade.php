@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
 
@@ -41,7 +41,7 @@
                         @csrf
                         @method('PUT')
                     <div class="card-body">
-                        
+
                             <fieldset>
                                 <div class="form-group">
                                     <label for="">First Name</label>
@@ -79,23 +79,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="join_date">Join Date</label>
-                                    <input type="text" name="join_date" id="join_date" class="form-control">
+                                    <input type="text" name="join_date" id="join_date" class="form-control" disabled>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="">Designation</label>
-                                        <select name="desg" class="form-control">
-                                            @foreach ($desgs as $desg)
-                                                <option value="{{ $desg }}"
-                                                @if ($desg == $employee->desg)
-                                                    selected
-                                                @endif
-                                                >
-                                                    {{ $desg }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                {{-- <div class="row">
                                     <div class="col-md-6">
                                         <label for="">Department</label>
                                         <select name="department_id" class="form-control">
@@ -110,7 +96,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="">Photo</label>
                                     <input type="file" name="photo" class="form-control-file">
@@ -120,10 +106,10 @@
                                         </div>
                                     @enderror
                                 </div>
-                                
+
                             </fieldset>
-                            
-                        
+
+
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-flat btn-primary" style="width: 40%; font-size:1.3rem">Save</button>
@@ -132,7 +118,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!-- /.container-fluid -->
 </section>

@@ -27,6 +27,7 @@ class UsersTableSeeder extends Seeder
         DB::table('attendances')->truncate();
         $employeeRole = Role::where('name', 'employee')->first();
         $adminRole =  Role::where('name', 'admin')->first();
+        $managerRole =  Role::where('name', 'manager')->first();
 
         $admin = User::create([
             'name' => 'Admin User',
@@ -37,11 +38,12 @@ class UsersTableSeeder extends Seeder
         $employee = User::create([
             'name' => 'Adham Samer',
             'email' => 'adhamsamer3301@gmail.com',
-            'password' => Hash::make('1234')
+            'password' => Hash::make('123456')
         ]);
 
         //
         $employee->roles()->attach($employeeRole);
+        // $manager->roles()->attach($managerRole);
         $dob = new DateTime('2000-03-03');
         $join = new DateTime('2021-01-01');
         $admin->roles()->attach($adminRole);
@@ -51,7 +53,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'Samer',
             'dob' => $dob->format('Y-m-d'),
             'sex' => 'Male',
-            'desg' => 'Manager',
+            'role_id' => '2',
             'department_id' => '1',
             'join_date' => $join->format('Y-m-d'),
             'salary' => 10500
