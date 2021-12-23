@@ -33,9 +33,9 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 
 2-Open XAMPP, then open Apache and MySQL services then Create a Database in phpmyadmin called "ATTMS"
 
-3- Clone the repo <https://github.com/AdhamSamer3301/EAMS.git>
+3- Clone the repo <https://github.com/AdhamSamer3301/ATTMS.git> in VS Code (or any other IDE compatible with Laravel) 
 
-3- Open Terminal in EAMS folder and Copy these codes:
+3- Open Terminal in ATTMS folder and Copy these codes:
 
 ```
 composer install 
