@@ -55,16 +55,30 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @foreach ($employees as $index => $employee)
+                                <?php
+                                        
+                                        $roles = DB::select(DB::raw(
+                                                "SELECT roles.name
+                                                FROM `roles` JOIN `role_user` JOIN `users` JOIN `employees`
+                                                ON (employees.user_id = users.id)
+                                                AND (users.id = role_user.user_id)
+                                                AND (role_user.role_id = roles.id)
+                                                WHERE (employees.first_name = '$employee->first_name') "
+                                                ));
+                                        $role = $roles[0]->name;
+                                ?>
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $employee->first_name.' '.$employee->last_name }}</td>
                                     <td>{{ $employee->department->name }}</td>
-                                    <td>{{ $employee->role_id }}</td>
+                                    <td>{{ $role }}</td>
                                     <td>{{ $employee->join_date->format('d M, Y') }}</td>
                                     <td>{{ $employee->salary }}</td>
                                     <td>
-                                        <a href="{{ route('admin.employees.profile', $employee->id) }}" class="btn btn-flat btn-info">View Profile</a>
+                                        <a href="{{ route('admin.employees.profile', $employee->id) }}" class="btn btn-flat btn-info">
+                                            View Profile</a>
                                         <button
                                         class="btn btn-flat btn-danger"
                                         data-toggle="modal"

@@ -17,6 +17,7 @@ class CreateRoleUserTable extends Migration
             $table->id();
             $table->bigInteger('role_id');
             $table->bigInteger('user_id');
+            // $table->bigInteger('department_id');
             $table->timestamps();
         });
     }

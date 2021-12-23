@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
 
@@ -47,6 +47,17 @@
                             </div>
                         </div>
                         <table class="table profile-table table-hover">
+                            <?php
+                                $roles = DB::select(DB::raw(
+                                        "SELECT roles.name
+                                        FROM `roles` JOIN `role_user` JOIN `users` JOIN `employees`
+                                        ON (employees.user_id = users.id)
+                                        AND (users.id = role_user.user_id)
+                                        AND (role_user.role_id = roles.id)
+                                        WHERE (employees.first_name = '$employee->first_name') "
+                                        ));
+                                $role = $roles[0]->name;
+                            ?>
                             <tr>
                                 <td>First Name</td>
                                 <td>{{ $employee->first_name }}</td>
@@ -63,35 +74,36 @@
                                 <td>Gender</td>
                                 <td>{{ $employee->sex }}</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>Join Date</td>
                                 <td>{{ $employee->join_date->format('d M, Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td>Designation</td>
-                                <td>{{ $employee->desg }}</td>
                             </tr>
                             <tr>
                                 <td>Department</td>
                                 <td>{{ $employee->department->name }}</td>
                             </tr>
                             <tr>
+                                <td>Role</td>
+                                <td>{{ $role }}</td>
+                            </tr>
+                            <tr>
                                 <td>Salary</td>
-                                <td>₹ {{ $employee->salary }}</td>
+                                <td> {{ $employee->salary }} LE</td>
                             </tr>
                         </table>
                     </div>
                     <div class="card-footer text-center" style="height: 2rem">
-                        
+
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!-- /.container-fluid -->
 </section>
+
 <!-- /.content -->
 
 <!-- /.content-wrapper -->

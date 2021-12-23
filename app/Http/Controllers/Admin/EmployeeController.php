@@ -20,8 +20,21 @@ use function Ramsey\Uuid\v1;
 class EmployeeController extends Controller
 {
     public function index() {
+        // $user = User::all();
+        // $employeeName = $
         $data = [
-            'employees' => Employee::all()
+
+            'employees' => Employee::all(),
+
+            // 'role' => DB::select(DB::raw(
+            //     "SELECT roles.name
+            //     FROM `roles` JOIN `role_user` JOIN `users` JOIN `employees`
+            //     ON (employees.user_id = users.id)
+            //     AND (users.id = role_user.user_id)
+            //     AND (role_user.role_id = roles.id)
+            //     WHERE employees.id = $employeeID "
+            // ))
+
         ];
         return view('admin.employees.index')->with($data);
     }
@@ -44,7 +57,7 @@ class EmployeeController extends Controller
             'last_name' => 'required',
             'sex' => 'required',
             'department_id' => 'required',
-            'role_id' => 'required',
+            // 'role_id' => 'required',
             'salary' => 'required|numeric',
             'email' => 'required|email',
             'photo' => 'image|nullable',
@@ -56,8 +69,21 @@ class EmployeeController extends Controller
             'password' => Hash::make($request->password)
         ]);
         $employeeRole = Role::where('name', $request->role )->first();
+        $managerRole = Role::where('name', $request->role )->first();
         // $employeeRole = $request->role->name;
-        $user->roles()->attach($employeeRole);
+        switch ($request->role) {
+            case "manager":
+                $user->roles()->attach($managerRole);
+                break;
+
+            case "employee":
+                $user->roles()->attach($employeeRole);
+                break;
+
+            default:
+            // $user->roles()->attach($employeeRole);
+                break;
+        }
         $employeeDetails = [
             'user_id' => $user->id,
             'first_name' => $request->first_name,
@@ -65,7 +91,7 @@ class EmployeeController extends Controller
             'sex' => $request->sex,
             'dob' => $request->dob,
             'join_date' => $request->join_date,
-            'role_id' => $request->role,
+            // 'role' => $request->role->name,
             'department_id' => $request->department_id,
             'salary' => $request->salary,
             'photo'  => 'user.png'
@@ -78,7 +104,7 @@ class EmployeeController extends Controller
             $filename = pathinfo($filename_ext, PATHINFO_FILENAME);
             // GET EXTENSION
             $ext = $request->file('photo')->getClientOriginalExtension();
-            //FILNAME TO STORE
+            //FILENAME TO STORE
             $filename_store = $filename.'_'.time().'.'.$ext;
             // UPLOAD IMAGE
             // $path = $request->file('photo')->storeAs('public'.DIRECTORY_SEPARATOR.'employee_photos', $filename_store);

@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('last_name');
             $table->dateTime('dob');
             $table->string('sex');
-            $table->string('role_id');
+            // $table->string('role_id');
             $table->string('department_id');
             $table->dateTime('join_date');
             $table->float('salary');

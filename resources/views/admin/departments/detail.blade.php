@@ -14,6 +14,9 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('admin.index') }}">Admin Dashboard</a>
                     </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.departments.index') }}">List Departments</a>
+                    </li>
                     <li class="breadcrumb-item active">
                         Department Details
                     </li>
@@ -47,14 +50,27 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
+                                    <th>Role</th>
                                     <th class="none">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($employees as $index => $employee)
+                                <?php
+                                    $roles = DB::select(DB::raw(
+                                            "SELECT roles.name
+                                            FROM `roles` JOIN `role_user` JOIN `users` JOIN `employees`
+                                            ON (employees.user_id = users.id)
+                                            AND (users.id = role_user.user_id)
+                                            AND (role_user.role_id = roles.id)
+                                            WHERE (employees.first_name = '$employee->first_name') "
+                                        ));
+                                        $role = $roles[0]->name;
+                                ?>
                                 <tr>
                                     <td>{{ $index +1 }}</td>
                                     <td>{{ $employee->first_name }}</td>
+                                    <td>{{ $role }}</td>
                                     <td>
                                         <a href="{{ route('admin.employees.profile', $employee->id) }}" class="btn btn-flat btn-info">View Employee</a>
                                         <button

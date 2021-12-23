@@ -49,7 +49,7 @@ class User extends Authenticatable
         }
         return false;
     }
-    
+
     public function hasRole($role) {
         if($this->roles()->where('name', $role)->first()) {
             return true;
@@ -61,9 +61,13 @@ class User extends Authenticatable
         return $this->hasOne('App\Employee');
     }
 
+    public function department() {
+        return $this->belongsTo('App\Department');
+    }
+
     public function sendPasswordResetNotification($token)
     {
-        // Your your own implementation.
+
         $this->notify(new ResetPassword($token));
     }
 }
