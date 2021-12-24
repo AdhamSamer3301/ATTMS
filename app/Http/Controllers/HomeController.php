@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Gate::allows('employee-access'))
+        if(Gate::allows('employee-access') || Gate::allows('manager-access') )
             return redirect()->route('employee.index');
         if(Gate::allows('admin-access'))
         return redirect()->route('admin.index');

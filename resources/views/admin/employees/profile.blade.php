@@ -94,7 +94,8 @@
                         </table>
                     </div>
                     <div class="card-footer text-center" style="height: 2rem">
-
+                        <a href="{{ route('admin.profile-edit', $employee->id) }}" class="btn btn-flat btn-info">
+                                            Edit Profile</a>
                     </div>
                 </div>
             </div>

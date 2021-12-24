@@ -27,24 +27,14 @@ class AttendanceController extends Controller
         }
     }
     public function location(Request $request) {
-        
-        $response = Http::get('https://nominatim.openstreetmap.org/reverse?format=geojson&lat='.$request->lat.'&lon='.$request->lon);
-        // dd();
-        // $result = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $request->lat . ',' . $request->lon . '&key=AIzaSyC_spXZlR87VF9qq073nAhFGZ-f3K6enqk';
-        // $file_contents = file_get_contents($result);
 
-        // $json_decode = json_decode($file_contents);
-        // echo  $json_decode->results[0]->formatted_address;
-        // $response = array(
-        //     'status' => 'success',
-        //     'result' => $json_decode
-        // );
+        $response = Http::get('https://nominatim.openstreetmap.org/reverse?format=geojson&lat='.$request->lat.'&lon='.$request->lon);
         return $response->json()['features'][0]['properties']['display_name'];
     }
 
     // Opens view for attendance register form
     public function create() {
-        
+
         $employee = Auth::user()->employee;
         $data = [
             'employee' => $employee,
@@ -132,7 +122,7 @@ class AttendanceController extends Controller
                     }
                 }
                 $filter = true;
-            }   
+            }
         }
         if ($attendances)
             $attendances = $attendances->reverse()->values();

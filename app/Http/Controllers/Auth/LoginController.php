@@ -31,10 +31,10 @@ class LoginController extends Controller
     // protected $redirectTo = '/';
     public function redirectTo() {
         $user = Auth::user();
-        if ($user->hasRole('admin')) {
-            return '/admin';
+        if (!($user->hasRole('Admin'))) {
+            return '/employee';
         }
-        return '/employee';
+        return '/admin';
     }
     /**
      * Create a new controller instance.

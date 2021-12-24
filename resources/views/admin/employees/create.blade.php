@@ -110,7 +110,7 @@
                                                 @if (old('role') == $role->name)
                                                     selected
                                                 @endif
-                                                @if ($role->name == "admin")
+                                                @if ($role->name == "Admin")
                                                     hidden
                                                 @endif
                                                 >

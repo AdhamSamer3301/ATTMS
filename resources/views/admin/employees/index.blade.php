@@ -58,7 +58,7 @@
 
                                 @foreach ($employees as $index => $employee)
                                 <?php
-                                        
+
                                         $roles = DB::select(DB::raw(
                                                 "SELECT roles.name
                                                 FROM `roles` JOIN `role_user` JOIN `users` JOIN `employees`

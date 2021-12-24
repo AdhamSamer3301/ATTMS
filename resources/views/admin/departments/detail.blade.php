@@ -72,11 +72,15 @@
                                     <td>{{ $employee->first_name }}</td>
                                     <td>{{ $role }}</td>
                                     <td>
-                                        <a href="{{ route('admin.employees.profile', $employee->id) }}" class="btn btn-flat btn-info">View Employee</a>
+                                        <a href="{{ route('admin.employees.profile', $employee->id) }}" class="btn btn-flat btn-info">
+                                            View Employee</a>
+
+                                        {{-- <a href="{{ route('admin.employees.manage', $employee->id) }}" class="btn btn-flat btn-info">
+                                            Make Manager</a> --}}
                                         <button
                                         class="btn btn-flat btn-success"
                                         data-toggle="modal"
-                                        data-target="#makeManager"
+                                        data-target="#makeManager{{ $index + 1 }}"
                                         >Make Manager</button>
                                     </td>
                                 </tr>
@@ -84,7 +88,37 @@
 
                             </tbody>
                         </table>
+                        @for ($i = 1; $i < count($employees)+1; $i++)
+                                <!-- Modal -->
+                                <div class="modal fade" id="makeManager{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle1{{ $i }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="card card-danger">
+                                                <div class="card-header">
+                                                    <h5 style="text-align: center !important">Are you sure to make him/her a manager ?</h5>
+                                                </div>
+                                                <div class="card-body text-center d-flex" style="justify-content: center">
 
+                                                    <button type="button" class="btn flat btn-secondary" data-dismiss="modal">No</button>
+
+                                                    <form
+                                                    action="{{ route('admin.employees.manage', $employee->id ) }}"
+                                                    method="POST"
+                                                    >
+                                                    @csrf
+                                                    {{-- @method('POST') --}}
+                                                        <button type="submit" class="btn flat btn-danger ml-1">Yes</button>
+                                                    </form>
+                                                </div>
+                                                <div class="card-footer text-center">
+                                                    <small>This action is irreversable</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.modal -->
+                            @endfor
 
                         @else
                         <div class="alert alert-info text-center" style="width:50%; margin: 0 auto">

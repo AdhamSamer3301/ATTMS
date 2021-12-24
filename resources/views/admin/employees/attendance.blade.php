@@ -83,6 +83,17 @@
                             </thead>
                             <tbody>
                                 @foreach ($employees as $index => $employee)
+                                <?php
+                                    $roles = DB::select(DB::raw(
+                                            "SELECT roles.name
+                                            FROM `roles` JOIN `role_user` JOIN `users` JOIN `employees`
+                                            ON (employees.user_id = users.id)
+                                            AND (users.id = role_user.user_id)
+                                            AND (role_user.role_id = roles.id)
+                                            WHERE (employees.first_name = '$employee->first_name') "
+                                        ));
+                                        $role = $roles[0]->name;
+                                ?>
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $employee->first_name.' '.$employee->last_name }}</td>
@@ -107,7 +118,7 @@
                                         <td><h6 class="text-center"><span class="badge badge-pill badge-danger">No Record</span></h6></td>
                                     @endif
                                     <td>{{ $employee->department }}</td>
-                                    <td>{{ $employee->role_id }}</td>
+                                    <td>{{ $role }}</td>
                                     <td>
                                         @if($employee->attendanceToday)
                                         <button

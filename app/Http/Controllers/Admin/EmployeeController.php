@@ -20,22 +20,10 @@ use function Ramsey\Uuid\v1;
 class EmployeeController extends Controller
 {
     public function index() {
-        // $user = User::all();
-        // $employeeName = $
         $data = [
-
             'employees' => Employee::all(),
-
-            // 'role' => DB::select(DB::raw(
-            //     "SELECT roles.name
-            //     FROM `roles` JOIN `role_user` JOIN `users` JOIN `employees`
-            //     ON (employees.user_id = users.id)
-            //     AND (users.id = role_user.user_id)
-            //     AND (role_user.role_id = roles.id)
-            //     WHERE employees.id = $employeeID "
-            // ))
-
         ];
+
         return view('admin.employees.index')->with($data);
     }
     public function create() {
@@ -72,11 +60,11 @@ class EmployeeController extends Controller
         $managerRole = Role::where('name', $request->role )->first();
         // $employeeRole = $request->role->name;
         switch ($request->role) {
-            case "manager":
+            case "Manager":
                 $user->roles()->attach($managerRole);
                 break;
 
-            case "employee":
+            case "Employee":
                 $user->roles()->attach($employeeRole);
                 break;
 
@@ -139,7 +127,7 @@ class EmployeeController extends Controller
     }
 
     public function attendanceByDate($date) {
-        $employees = DB::table('employees')->select('id', 'first_name', 'last_name', 'role_id', 'department_id')->get();
+        $employees = DB::table('employees')->select('id', 'first_name', 'last_name', 'department_id')->get();
         $attendances = Attendance::all()->filter(function($attendance, $key) use ($date){
             return $attendance->created_at->dayOfYear == $date->dayOfYear;
         });
@@ -175,5 +163,27 @@ class EmployeeController extends Controller
     public function employeeProfile($employee_id) {
         $employee = Employee::findOrFail($employee_id);
         return view('admin.employees.profile')->with('employee', $employee);
+    }
+
+    public function makeManager($employee_id)
+    {
+            $managerRole = Role::where('name', "Manager" )->first();
+            // $userID = $request->employee->user_id;
+            // $id = intval($employee_id);
+            // // $employee = Employee::findOrFail($request->);
+            // $users = DB::select(DB::raw(
+            //     " SELECT users.id
+            //         FROM `users`
+            //         JOIN `employees`
+            //         ON (employees.user_id = users.id)
+            //         WHERE employees.id = $id  "
+            // ));
+            // $user = $users[0];
+            $employee = Employee::findOrFail($employee_id);
+            $user = User::findOrFail($employee->user_id);
+            $user->roles()->detach();
+            $user->roles()->attach($managerRole);
+            session()->flash('success', 'Employee has been a Manager');
+        return back();
     }
 }

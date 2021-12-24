@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
 
@@ -39,6 +39,17 @@
                     </div>
                     <div class="card-body">
                         @include('messages.alerts')
+                        <?php
+                                    $roles = DB::select(DB::raw(
+                                            "SELECT roles.name
+                                            FROM `roles` JOIN `role_user` JOIN `users` JOIN `employees`
+                                            ON (employees.user_id = users.id)
+                                            AND (users.id = role_user.user_id)
+                                            AND (role_user.role_id = roles.id)
+                                            WHERE (employees.first_name = '$employee->first_name') "
+                                        ));
+                                        $role = $roles[0]->name;
+                                ?>
                         <div class="row mb-3">
                             <div class="col text-center mx-auto">
                                 <img src="/storage/employee_photos/{{ $employee->photo }}" class="rounded-circle img-fluid" alt=""
@@ -63,14 +74,14 @@
                                 <td>Gender</td>
                                 <td>{{ $employee->sex }}</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>Join Date</td>
                                 <td>{{ $employee->join_date->format('d M, Y') }}</td>
                             </tr>
                             <tr>
-                                <td>Designation</td>
-                                <td>{{ $employee->desg }}</td>
+                                <td>Role</td>
+                                <td>{{ $role }}</td>
                             </tr>
                             <tr>
                                 <td>Department</td>
@@ -78,7 +89,7 @@
                             </tr>
                             <tr>
                                 <td>Salary</td>
-                                <td>₹ {{ $employee->salary }}</td>
+                                <td> {{ $employee->salary }}</td>
                             </tr>
                         </table>
                     </div>
@@ -88,7 +99,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!-- /.container-fluid -->
 </section>
