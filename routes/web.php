@@ -32,16 +32,11 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','
     Route::get('/employees/list-employees', 'EmployeeController@index')->name('employees.index');
     Route::get('/employees/add-employee', 'EmployeeController@create')->name('employees.create');
     Route::post('/employees', 'EmployeeController@store')->name('employees.store');
-    Route::post('/employees/manage/{employee_id}', 'EmployeeController@makeManager')->name('employees.manage');
     Route::get('/employees/attendance', 'EmployeeController@attendance')->name('employees.attendance');
     Route::post('/employees/attendance', 'EmployeeController@attendance')->name('employees.attendance');
     Route::delete('/employees/attendance/{attendance_id}', 'EmployeeController@attendanceDelete')->name('employees.attendance.delete');
     Route::get('/employees/profile/{employee_id}', 'EmployeeController@employeeProfile')->name('employees.profile');
     Route::delete('/employees/{employee_id}', 'EmployeeController@destroy')->name('employees.delete');
-    Route::get('/employee/profile-edit/{employee_id}', 'EmployeeController@profile_edit')->name('profile-edit');
-    Route::put('/employee/profile/{employee_id}', 'EmployeeController@profile_update')->name('profile-update');
-
-
     // Routes for employees //
 
     // Routes for Departments //
@@ -67,7 +62,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','
     // Routes for holidays //
 });
 
-Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware('role:Manager,Employee')->group(function () {
+Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware(['auth','can:employee-access'])->group(function () {
     Route::get('/', 'EmployeeController@index')->name('index');
     Route::get('/profile', 'EmployeeController@profile')->name('profile');
     Route::get('/profile-edit/{employee_id}', 'EmployeeController@profile_edit')->name('profile-edit');
@@ -99,4 +94,3 @@ Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware(
     Route::get('/self/salary_slip_print', 'SelfController@salary_slip_print')->name('self.salary_slip_print');
     // Routes for Self //
 });
-
