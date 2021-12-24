@@ -2,7 +2,7 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>EAMS</b></a>
+        <a href="../../index2.html"><b>ATTMS</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -14,7 +14,7 @@
                 <div class="input-group mb-3">
                     <input
                         type="email"
-                        class="form-control @error('email') is-invalid @enderror" name="email" 
+                        class="form-control @error('email') is-invalid @enderror" name="email"
                         value="{{ old('email') }}" required
                         placeholder="Email" autocomplete="email"
                         autofocus
@@ -52,7 +52,7 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="icheck-primary">
-                            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} 
+                            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}
                             />
                             <label for="remember">
                                 Remember Me
@@ -71,16 +71,16 @@
                     <!-- /.col -->
                 </div>
             </form>
-            @if (Route::has('password.request'))
+            {{-- @if (Route::has('password.request'))
             <p class="mb-1">
                 <a href="{{ route('password.request') }}">I forgot my password</a>
             </p>
-            @endif
+            @endif --}}
         </div>
         <!-- /.login-card-body -->
     </div>
 </div>
-<!-- /.login-box -->    
+<!-- /.login-box -->
 @endsection
 
 

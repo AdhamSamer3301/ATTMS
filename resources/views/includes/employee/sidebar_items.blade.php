@@ -66,15 +66,7 @@
         </p>
     </a>
     <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a
-                href="{{ route('employee.self.salary_slip') }}"
-                class="nav-link"
-            >
-                <i class="far fa-circle nav-icon"></i>
-                <p>Generate Salary slip</p>
-            </a>
-        </li>
+        
         <li class="nav-item">
             <a
                 href="{{ route('employee.self.holidays') }}"
